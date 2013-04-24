@@ -15,9 +15,15 @@ namespace :cf_affiliates do
     @raw_doc_timestamp = @raw_doc.inner_html.match(@timestamp_regex)[1]
     
     ScrapeLogger.info(DateTime.now.strftime + ": Comparing " + @raw_doc_timestamp + " to " + Scrape.last.hq_timestamp)
+    
+    unless Scrape.count.eql?(0)
+      @run_import = !@raw_doc_timestamp.eql?(Scrape.last.hq_timestamp)
+    else
+      @run_import = true
+    end
        
     # Check to see if it's more up to date than our current version
-    unless @raw_doc_timestamp.eql?(Scrape.last.hq_timestamp)
+    if @run_import.eql?(true)
       ScrapeLogger.info(DateTime.now.strftime + ": Running update")
       @scrape = Scrape.new
       @scrape.raw_html = @raw_doc.inner_html
