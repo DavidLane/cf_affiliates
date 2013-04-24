@@ -1,0 +1,7 @@
+<% unless @affiliates.blank? %>
+  <ul>
+    <% @affiliates.each do |a| %>
+      <li><%= link_to a.title, affiliate_path(a) %></li>
+    <% end %>
+  </ul>  
+<% end %>
