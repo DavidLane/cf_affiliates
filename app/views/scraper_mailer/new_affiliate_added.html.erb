@@ -1,0 +1,8 @@
+<% unless @new_affiliates.blank? %>
+  <h1>New affiliates added:</h1>
+  <ul>
+    <% @new_affiliates.each do |a| %>
+      <li><%= a.title %></li>
+    <% end %>
+  </ul>  
+<% end %>

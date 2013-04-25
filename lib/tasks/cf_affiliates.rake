@@ -23,12 +23,14 @@ namespace :cf_affiliates do
        
     # Check to see if it's more up to date than our current version
     if @run_import.eql?(true)
-
-      ScrapeLogger.info(DateTime.now.strftime + ": Running update")
-      @scrape = Scrape.new
+      ScrapeLogger.info(DateTime.now.strftime + ": Running update") # Log that this ran
+      @scrape = Scrape.new # Save the scrape!
       @scrape.raw_html = @raw_doc.inner_html
       @scrape.hq_timestamp = @raw_doc_timestamp
       @scrape.save 
+      
+      # Create array for each affiliate that we added
+      @new_affiliate_array = []
        
       @affiliates_div = @raw_doc.inner_html
   
@@ -86,9 +88,11 @@ namespace :cf_affiliates do
             
             ScrapeLogger.info(DateTime.now.strftime + ": New Affiliate found and added - " + @affiliate.title)
             
-            ScraperMailer.new_affiliate_added(@affilliate).deliver            
+            @new_affiliate_array.push(@affiliate)
+            
           end
         end
+        ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       end
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   
