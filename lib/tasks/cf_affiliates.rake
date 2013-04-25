@@ -53,8 +53,9 @@ namespace :cf_affiliates do
         # - Freiburg, BW,&nbsp;Germany  
         
         @location_regex = /( - ([A-Za-z\s]+),(\s|&nbsp;)([a-zA-Z\s]+)(,&nbsp;([A-Za-z\s]+))?)/
-        # 1 = City
-        # 3 = State
+        # 1 = Whole thing
+        # 2 = City
+        # 4 = State
         # 5 = Country (optional)
         
         @match = @location_regex.match(a[3])
@@ -63,8 +64,8 @@ namespace :cf_affiliates do
           
           @title = a[2]
           @website = a[1]
-          @city = @match[1]
-          @state = @match[3]
+          @city = @match[2]
+          @state = @match[4]
           @country = @match[5]
           @original_scrape_data = a[0]
           
