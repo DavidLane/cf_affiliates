@@ -52,7 +52,15 @@ namespace :cf_affiliates do
         # - Denver,&nbsp;CO
         # - Freiburg, BW,&nbsp;Germany  
         
-        @location_regex = /( - ([A-Za-z\s]+),(\s|&nbsp;)([a-zA-Z\s]+)(,&nbsp;([A-Za-z\s]+))?)/
+        # New Regex
+        @location_regex = /( - ([A-Za-z\s]+),&nbsp;([A-Z]{2})?([A-Za-z\s]+)?)/
+        # 1 - Full Match
+        # 2 - City
+        # 3 - State
+        # 4 - Country
+        
+        # Old Regex
+        #@location_regex = /( - ([A-Za-z\s]+),(\s|&nbsp;)([a-zA-Z\s]+)(,&nbsp;([A-Za-z\s]+))?)/
         # 1 = Whole thing
         # 2 = City
         # 4 = State
@@ -65,17 +73,34 @@ namespace :cf_affiliates do
           @title = a[2]
           @website = a[1]
           @city = @match[2]
-          @state = @match[4]
-          @country = @match[5]
+          
+          unless @match[3].blank?
+            @state = @match[3]
+            @country = "United States"
+          else
+            @state = nil            
+          end
+          
+          if @match[4].blank?
+            unless @country.present?
+              @country = nil
+            end
+          else
+            @country = @match[4]
+          end
+          
           @original_scrape_data = a[0]
           
-          if @affiliate = Affiliate.find_by_title(a[2])
-            @affiliate.city = @city unless @city.blank?
-            @affiliate.state = @state unless @state.blank?
-            @affiliate.country = @country unless @country.blank?
-            @affiliate.original_scrape_data = @original_scrape_data
-            @affiliate.save 
-          else
+          puts @match.inspect 
+          
+          # Don't want to overwrite data anymore
+          #if @affiliate = Affiliate.find_by_title(a[2])
+          #  @affiliate.city = @city unless @city.blank?
+          #  @affiliate.state = @state unless @state.blank?
+          #  @affiliate.country = @country unless @country.blank?
+          #  @affiliate.original_scrape_data = @original_scrape_data
+          #  @affiliate.save 
+          #else
             # Can't find this affiliate
             # Create a new one and notify Admin to confirm
             @affiliate = Affiliate.new
@@ -91,7 +116,7 @@ namespace :cf_affiliates do
             
             @new_affiliate_array.push(@affiliate)
             
-          end
+          #end
         end
         #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       end
