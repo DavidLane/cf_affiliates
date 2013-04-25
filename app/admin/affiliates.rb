@@ -38,9 +38,9 @@ ActiveAdmin.register Affiliate do
       f.input :country      
     end
     
-    f.inputs "Certifications" do
-      f.input :certifications, :as => :check_boxes
-    end
+    #f.inputs "Certifications" do
+    #  f.input :certifications, :as => :check_boxes
+    #end
     
     f.inputs "Scrape Data" do
       f.input :original_scrape_data
