@@ -92,7 +92,7 @@ namespace :cf_affiliates do
             
           end
         end
-        ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
+        #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       end
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   
