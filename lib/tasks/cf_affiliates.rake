@@ -29,7 +29,7 @@ namespace :cf_affiliates do
       @scrape.hq_timestamp = @raw_doc_timestamp
       @scrape.save 
        
-      @affiliates_div = @raw_doc.raw_html
+      @affiliates_div = @raw_doc.inner_html
   
       # Regex Pattern
       # Epic Regex Winnings!
