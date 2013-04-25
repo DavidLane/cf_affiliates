@@ -61,12 +61,12 @@ namespace :cf_affiliates do
         
         unless @match.blank?
           
-          @title = @match[2]
-          @website = @match[1]
+          @title = a[2]
+          @website = a[1]
           @city = @match[1]
           @state = @match[3]
           @country = @match[5]
-          @original_scrape_data = @match[0]
+          @original_scrape_data = a[0]
           
           if @affiliate = Affiliate.find_by_title(a[2])
             @affiliate.city = @city unless @city.blank?
