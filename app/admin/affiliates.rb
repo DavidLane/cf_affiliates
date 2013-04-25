@@ -32,6 +32,7 @@ ActiveAdmin.register Affiliate do
       f.input :contact_name
       f.input :contact_number
       f.input :contact_email
+      f.input :address
       f.input :city
       f.input :state
       f.input :country      
