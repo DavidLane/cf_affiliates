@@ -21,7 +21,10 @@ require 'open-uri'
 # a[2] = affiliate title
 # a[3] = location data TODO:This needs parsing and saving
 
-@regex = /(<a href="(http:\/\/[A-Za-z0-9\/\.]+)" target="_blank">([\w\s]+)<\/a>([\w\s\-,&;]+)?<br>)/
+# @regex = /(<a href="(http:\/\/[A-Za-z0-9\/\.\-]+)" target="_blank">([\w\s]+)<\/a>([\w\s\-,&;]+)?<br>)/
+# Updated Regex. Hope this is a bit more thorough because it looks EPIC!
+@regex = /<[a-z\s=]+["']+([:\/A-Za-z\-\.]+)["']+[a-z=\s'"_]+>([A-Za-z0-9\-\s]+)[<\/A-Za-z>]+([\w\s\-,&;]+)[a-z\/<>\s]+/
+# <[a href=][']([http://www.crossfit-sheffield.co.uk/])['][target='_blank']>([CrossFit Sheffield])[</a>]([ - Sheffield,&nbsp;United Kingdom])[<br />]
 
 @affiliates_array = @affiliates_div.scan(@regex)
 
