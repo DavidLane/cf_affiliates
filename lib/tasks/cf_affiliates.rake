@@ -32,7 +32,7 @@ namespace :cf_affiliates do
       # Create array for each affiliate that we added
       @new_affiliate_array = []
        
-      @affiliates_div = @raw_doc.inner_html
+      @affiliates_div = @scrape.raw_html
   
       # Regex Pattern
       # Epic Regex Winnings!
@@ -92,7 +92,7 @@ namespace :cf_affiliates do
             
           end
         end
-        ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
+        #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       end
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   
