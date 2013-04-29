@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 
 namespace :cf_affiliates do
-  desc "TODO"
+  desc "Connect to .com and import the affiliate data"
   task :scrape => :environment do
     ScrapeLogger = Logger.new("#{Rails.root}/log/scrape.log")    
     
@@ -24,6 +24,7 @@ namespace :cf_affiliates do
     # Check to see if it's more up to date than our current version
     if @run_import.eql?(true)
       ScrapeLogger.info(DateTime.now.strftime + ": Running update") # Log that this ran
+      puts "Running update"
       @scrape = Scrape.new # Save the scrape!
       @scrape.raw_html = @raw_doc.inner_html
       @scrape.hq_timestamp = @raw_doc_timestamp
@@ -44,19 +45,23 @@ namespace :cf_affiliates do
       
       # @regex = /(<a href="(http:\/\/[A-Za-z0-9\/\.\-]+)" target="_blank">([\w\s]+)<\/a>([\w\s\-,&;]+)?<br>)/
       # Updated Regex. Hope this is a bit more thorough because it looks EPIC!
-      @regex = /<[a-z\s=]+["']+([:\/A-Za-z\-\.]+)["']+[a-z=\s'"_]+>([A-Za-z0-9\-\s]+)[<\/A-Za-z>]+([\w\s\-,&;]+)[a-z\/<>\s]+/
-      # <[a href=][']([http://www.crossfit-sheffield.co.uk/])['][target='_blank']>([CrossFit Sheffield])[</a>]([ - Sheffield,&nbsp;United Kingdom])[<br />]
+      @regex = /([<a-z\s=]+["']+([:\/A-Za-z\-\.0-9_\?#=!]+)["']+[a-z=\s'"_]+>([A-Za-z0-9\-\s\.\(\)&;]+)[<\/A-Za-z>]+([\w\s\-,&;\.]+)[br\/<\s]+>)/
+      # [<a href=][']([http://www.crossfit-sheffield.co.uk/])['][target='_blank']>([CrossFit Sheffield])[</a>]([ - Sheffield,&nbsp;United Kingdom])[<br />]
       
       @affiliates_array = @affiliates_div.scan(@regex)
       
+      ScrapeLogger.info(DateTime.now.strftime + ": Affiliates Count = " + @affiliates_array.count.to_s) # Log that this ran
+      
+      puts @affiliates_array.count.to_s
+      
       @affiliates_array.each do |a|
-        puts a[3]
+        # puts a[3]
         # More Epic Regex Winnings!
         # - Denver,&nbsp;CO
         # - Freiburg, BW,&nbsp;Germany  
         
         # New Regex
-        @location_regex = /( - ([A-Za-z\s]+),&nbsp;([A-Z]{2})?([A-Za-z\s]+)?)/
+        @location_regex = /( - ([A-Za-z\s\-\.&;\(\)]+),&nbsp;([A-Z]{2})?([A-Za-z\s]+)?)/
         # 1 - Full Match
         # 2 - City
         # 3 - State
@@ -94,7 +99,7 @@ namespace :cf_affiliates do
           
           @original_scrape_data = a[0]
           
-          puts @match.inspect 
+          # puts @match.inspect 
           
           # Don't want to overwrite data anymore
           #if @affiliate = Affiliate.find_by_title(a[2])
@@ -113,7 +118,7 @@ namespace :cf_affiliates do
             @affiliate.state = @state unless @state.blank?
             @affiliate.country = @country unless @country.blank?
             @affiliate.original_scrape_data = @original_scrape_data
-            @affiliate.save
+            @affiliate.save!
             
             ScrapeLogger.info(DateTime.now.strftime + ": New Affiliate found and added - " + @affiliate.title)
             
@@ -121,11 +126,36 @@ namespace :cf_affiliates do
             
           #end
         end
-        #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       end
+      #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
+      puts @new_affiliate_array.count      
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   
     end  
+  end
+  
+  desc "See which affiliates are missing from our import"
+  task :compare_imported_to_data => :environment do
+    
+    # Grab the whole line
+    @regex = /(<a.*?br\s?\/?>)/
+    @complete_array = Scrape.last.raw_html.scan(@regex)
+    
+    total_count = @complete_array.count
+    
+    missing_count = 0
+    
+    unless @complete_array.blank?
+      @complete_array.each do |aff|
+        unless Affiliate.exists?(:original_scrape_data => aff[0])
+          missing_count += 1
+          puts aff.inspect
+        end
+      end
+    end
+    
+    puts "Total count = " + total_count.to_s
+    puts "Missing count = " + missing_count.to_s
   end
 
 end
