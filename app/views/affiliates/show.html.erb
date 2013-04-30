@@ -12,3 +12,7 @@
   <li>Certifications: </li>
   <li>Map Coords: </li>
 </ul>
+
+<% if current_admin_user %>
+  <%= link_to "Edit", edit_admin_affiliate_path(@affiliate) %>
+<% end %>
