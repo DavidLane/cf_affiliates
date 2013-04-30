@@ -45,14 +45,20 @@ namespace :cf_affiliates do
       
       # @regex = /(<a href="(http:\/\/[A-Za-z0-9\/\.\-]+)" target="_blank">([\w\s]+)<\/a>([\w\s\-,&;]+)?<br>)/
       # Updated Regex. Hope this is a bit more thorough because it looks EPIC!
-      @regex = /([<a-z\s=]+["']+([:\/A-Za-z\-\.0-9_\?#=!]+)["']+[a-z=\s'"_]+>([A-Za-z0-9\-\s\.\(\)&;]+)[<\/A-Za-z>]+([\w\s\-,&;\.]+)[br\/<\s]+>)/
-      # [<a href=][']([http://www.crossfit-sheffield.co.uk/])['][target='_blank']>([CrossFit Sheffield])[</a>]([ - Sheffield,&nbsp;United Kingdom])[<br />]
+      # @regex = /([<a-z\s=]+["']+([:\/A-Za-z\-\.0-9_\?#=!]+)["']+[a-z=\s'"_]+>([A-Za-z0-9\-\s\.\(\)&;]+)[<\/A-Za-z>]+([\w\s\-,&;\.]+)[br\/<\s]+>)/
+      # [<a href=][']([http://www.crossfit-sheffield.co.uk/])['][target='_blank']>([CrossFit Sheffield])[</a>]([ - Sheffield,&nbsp;United Kingdom])[<br />]      
+      # Another regex. Identifies the elements we want with lazy *'s to make sure it gets all content regardless of if it's valid
+      @regex = /<.+??="(.+?)(?="|').*?>(.+?)<.+?>(.+?)<.+?>/
+      # 0 - Full Match
+      # 1 - Website
+      # 2 - Name
+      # 3 - Location
       
       @affiliates_array = @affiliates_div.scan(@regex)
       
       ScrapeLogger.info(DateTime.now.strftime + ": Affiliates Count = " + @affiliates_array.count.to_s) # Log that this ran
       
-      puts @affiliates_array.count.to_s
+      puts "Affiliate count: " + @affiliates_array.count.to_s
       
       @affiliates_array.each do |a|
         # puts a[3]
@@ -128,7 +134,7 @@ namespace :cf_affiliates do
         end
       end
       #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
-      puts @new_affiliate_array.count      
+      puts "New affilaites:" + @new_affiliate_array.count      
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   
     end  
