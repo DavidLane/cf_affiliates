@@ -36,6 +36,7 @@ ActiveAdmin.register Affiliate do
       f.input :postcode
       f.input :city
       f.input :state
+      f.input :region
       f.input :country      
     end
     
