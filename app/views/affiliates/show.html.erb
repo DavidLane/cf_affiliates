@@ -1,3 +1,5 @@
+<% title @affiliate.title %>
+
 <h1><%= @affiliate.title %></h1>
 <ul>
   <li>Contact Name: <%= @affiliate.contact_name %></li>
@@ -7,7 +9,7 @@
   <li>Address: <%= @affiliate.address %></li>
   <li>City: <%= @affiliate.city %></li>
   <li>Postcode: <%= @affiliate.postcode %></li>
-  <li>Region: <%= @affiliate.region.title %></li>
+  <li>Region: <%= @affiliate.region.present? ? @affiliate.region.title : "" %></li>
 </ul>
 
 <% if current_admin_user %>
