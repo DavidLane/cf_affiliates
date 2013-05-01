@@ -6,11 +6,8 @@
   <li>Website: <%= link_to @affiliate.website, @affiliate.website %></li>
   <li>Address: <%= @affiliate.address %></li>
   <li>City: <%= @affiliate.city %></li>
-  <li>County: <%= @affiliate.state %></li>
   <li>Postcode: <%= @affiliate.postcode %></li>
-  <li>Country: <%= @affiliate.country %></li>
-  <li>Certifications: </li>
-  <li>Map Coords: </li>
+  <li>Region: <%= @affiliate.region.title %></li>
 </ul>
 
 <% if current_admin_user %>
