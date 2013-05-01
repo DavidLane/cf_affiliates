@@ -1,4 +1,8 @@
 class ApiController < ApplicationController
+
+  def index
+    # Nothing in here
+  end
   
   def get_regions
     @regions = Region.all
