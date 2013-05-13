@@ -119,7 +119,7 @@ namespace :cf_affiliates do
             # puts @match.inspect 
             
             # Don't want to overwrite data anymore
-            if @affiliate = Affiliate.find_by_title(a[2])
+            if @affiliate = Affiliate.find_by_title(@title)
             #  @affiliate.city = @city unless @city.blank?
             #  @affiliate.state = @state unless @state.blank?
             #  @affiliate.country = @country unless @country.blank?
@@ -135,7 +135,7 @@ namespace :cf_affiliates do
               @affiliate.state = @state unless @state.blank?
               @affiliate.country = @country unless @country.blank?
               @affiliate.original_scrape_data = @original_scrape_data
-              # @affiliate.save!
+              @affiliate.save!
               
               ScrapeLogger.info(DateTime.now.strftime + ": New Affiliate found and added - " + @affiliate.title)
               
