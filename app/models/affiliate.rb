@@ -12,7 +12,7 @@ class Affiliate < ActiveRecord::Base
   scope :uk, where(:country => "United Kingdom").order(:title)
   
   def has_geolocation_data?
-    if self.coords_lat and self.coords_long
+    if self.coords_lat.present? and self.coords_long.present?
       return true
     end
   end
