@@ -184,7 +184,7 @@ namespace :cf_affiliates do
     
     unless @affiliates.blank?
       @affiliates.each do |a|
-        unless @affilates.has_geolocation_data
+        unless @affilates.has_geolocation_data?
           @postcode = a.postcode.gsub(/\s+/, "")
           @url = @root_url + @postcode + @extention
           doc = Nokogiri::HTML(open(@url))
