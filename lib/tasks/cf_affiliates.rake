@@ -189,7 +189,8 @@ namespace :cf_affiliates do
             @postcode = a.postcode.gsub(/\s+/, "")
             @url = @root_url + @postcode + @extention
             doc = Nokogiri::HTML(open(@url))
-            puts doc
+            puts "Lat: " + doc.css('lat')
+            puts "Long: " + doc.css('long')
           else
             puts a.title + " has no postcode"
           end
