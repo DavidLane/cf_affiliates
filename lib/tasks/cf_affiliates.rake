@@ -185,10 +185,14 @@ namespace :cf_affiliates do
     unless @affiliates.blank?
       @affiliates.each do |a|
         unless a.has_geolocation_data?
-          @postcode = a.postcode.gsub(/\s+/, "")
-          @url = @root_url + @postcode + @extention
-          doc = Nokogiri::HTML(open(@url))
-          puts doc
+          if a.has_postcode?
+            @postcode = a.postcode.gsub(/\s+/, "")
+            @url = @root_url + @postcode + @extention
+            doc = Nokogiri::HTML(open(@url))
+            puts doc
+          else
+            puts a.title + " has no postcode"
+          end
         end
       end
     end

@@ -16,4 +16,8 @@ class Affiliate < ActiveRecord::Base
       return true
     end
   end
+  
+  def has_postcode?
+    return self.postcode.present?
+  end
 end
