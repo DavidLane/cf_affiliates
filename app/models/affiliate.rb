@@ -10,4 +10,10 @@ class Affiliate < ActiveRecord::Base
   # accepts_nested_attributes_for :certifications, :affiliate_certifications
   
   scope :uk, where(:country => "United Kingdom").order(:title)
+  
+  def has_geolocation_data?
+    if self.coords_lat and self.coords_long
+      return true
+    end
+  end
 end
