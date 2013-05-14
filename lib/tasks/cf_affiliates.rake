@@ -175,5 +175,23 @@ namespace :cf_affiliates do
     puts "Total count = " + total_count.to_s
     puts "Missing count = " + missing_count.to_s
   end
+  
+  desc "Get geolocation from postcode"
+  task :get_geolocations_from_postcode => :environment do
+    @root_url = "http://uk-postcodes.com/postcode/"
+    @extention = ".xml"
+    @affiliates = Affiliate.uk
+    
+    unless @affiliates.blank?
+      @affiliates.each do |a|
+        unless @affilates.has_geolocation_data
+          @postcode = a.postcode.gsub(/\s+/, "")
+          @url = @root_url + @postcode + @extention
+          doc = Nokogiri::HTML(open(@url))
+          puts doc
+        end
+      end
+    end
+  end
 
 end
