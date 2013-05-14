@@ -191,16 +191,16 @@ namespace :cf_affiliates do
             puts "URL = " + @url
             begin
               doc = Nokogiri::HTML(open(@url))
+              @lat = doc.css('lat').text
+              @long = doc.css('lng').text
+              puts "Lat: " + @lat
+              puts "Long: " + @long
+              a.coords_lat = @lat
+              a.coords_long = @long
+              a.save!              
             rescue OpenURI::HTTPError => ex
               puts ex.to_s
             end
-            @lat = doc.css('lat').text
-            @long = doc.css('lng').text
-            puts "Lat: " + @lat
-            puts "Long: " + @long
-            a.coords_lat = @lat
-            a.coords_long = @long
-            a.save!
           else
             puts a.title + " has no postcode"
           end
