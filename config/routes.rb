@@ -1,6 +1,7 @@
 CfAffiliateScraper::Application.routes.draw do
 
   resources :affiliates
+  resources :affiliate_update_requests
   
   # API Routes
   match "api" => "api#index", :as => :api_index
