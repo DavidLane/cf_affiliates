@@ -1,7 +1,9 @@
 <script type="text/javascript">  
   $(document).ready(function() {
-      map.center = new google.maps.LatLng(<%= @region.coords_lat %>, <%= @region.coords_long %>);
-      map.zoom = 9;
+      <% if @region.has_coords? %>
+        map.center = new google.maps.LatLng(<%= @region.coords_lat %>, <%= @region.coords_long %>);
+        map.zoom = 9;
+      <% end %>
       
       <% unless @affiliates.blank? %>
       var infoWindows = [];
