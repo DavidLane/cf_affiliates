@@ -12,7 +12,9 @@ CfAffiliateScraper::Application.routes.draw do
   match "api/get_affiliates_by_country/:country" => "api#get_affiliates_by_country", :as => :api_get_affiliate_by_country
   match "api/get_affiliates_by_city/:city" => "api#get_affiliates_by_city", :as => :api_get_affiliate_by_city
   match "api/get_all_affiliates" => "api#get_all_affiliates", :as => :api_get_all_affiliates
-  match "api/get_affiliate/:id" => "api#get_affiliate", :as => :api_get_affiliate  
+  match "api/get_affiliate/:id" => "api#get_affiliate", :as => :api_get_affiliate
+  
+  match "regions/:id" => "regions#show", :as => :region_show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
