@@ -15,23 +15,13 @@
           
           markers.push(marker<%= a.id %>);
           
-          //var infowindow<%= a.id %> = new google.maps.InfoWindow({
-          //  content: "<h1><%= a.title %></h1>"
-          //});
-          
-          //infoWindows.push(infowindow<%= a.id %>);
-          
           google.maps.event.addListener(marker<%= a.id %>, 'click', function() {
-            //for (var i = 0; i < infoWindows.length; i++) {
-            //  infoWindows[i].close();  
-            //}
-            
-            // infowindow<%= a.id %>.open(map,marker<%= a.id %>);
             $(".affiliate_info").hide();
             $("#affiliate-info-<%= a.id %>").show();
           });
         <% end %>
       <% end %>
+    var markerCluster = new MarkerClusterer(map, markers);      
     <% end %>
        
   });  

@@ -4,7 +4,8 @@
   <% title = yield(:title) %>
   <title><%= title.blank? ? 'CF UK Affiliates' : title %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCEsLFz9TSquUQENz6zCo-5qW9Z3AVT_2s&sensor=true" %>  
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCEsLFz9TSquUQENz6zCo-5qW9Z3AVT_2s&sensor=true" %>
+  <%= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js" %>  
   <%= javascript_include_tag "application" %>    
   <%= csrf_meta_tags %>
 </head>
