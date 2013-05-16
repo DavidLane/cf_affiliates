@@ -1,6 +1,6 @@
 class ScraperMailer < ActionMailer::Base
   default :to => AdminUser.all.map(&:email),
-          :from => "from@example.com"
+          :from => "scraper@cfuk-affiliates.com"
   
   def new_affiliates_added(new_affiliates)
     @affiliates = new_affiliates

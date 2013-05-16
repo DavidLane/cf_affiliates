@@ -12,7 +12,7 @@
   <li>Region: <%= @affiliate.region.present? ? @affiliate.region.title : "" %></li>
 </ul>
 
-<h2>Is this data incorrect? Change it!</h2>
+<h2>Is this data incorrect?</h2>
 <p>If this data is currently inaccurate let us know and we'll update it.</p>
 <p>Affiliate owners: For security reasons we will only make changes that put our data inline with your current website. Be sure to update it before requesting changes.</p>
 <%= simple_form_for @affiliate_update_request do |f| %>

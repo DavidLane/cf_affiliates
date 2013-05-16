@@ -1,3 +1,24 @@
+<script type="text/javascript">  
+  $(document).ready(function() {
+    
+    <% unless @affiliates.blank? %>
+      <% @affiliates.each do |a| %>
+        <% if a.has_geolocation_data? %>
+          var myLatlng<%= a.id %> = new google.maps.LatLng(<%= a.coords_lat %>,<%= a.coords_long %>);    
+          var marker<% a.id %> = new google.maps.Marker({
+              position: myLatlng<%= a.id %>,
+              map: map,
+              title: <%= a.title %>
+          });          
+        <% end %>
+      <% end %>
+    <% end %>
+       
+  });  
+</script>
+
+<div id="map-canvas">&nbsp;</div>
+
 <% unless @affiliates.blank? %>
   <ul>
     <% @affiliates.each do |a| %>
@@ -5,3 +26,5 @@
     <% end %>
   </ul>  
 <% end %>
+
+
