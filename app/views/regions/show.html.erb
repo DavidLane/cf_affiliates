@@ -1,0 +1,42 @@
+<script type="text/javascript">  
+  $(document).ready(function() {
+      map.center = new google.maps.LatLng(<%= @region.coords_lat %>, <%= @region.coords_long %>);
+      map.zoom = 9;
+      
+      <% unless @affiliates.blank? %>
+      var infoWindows = [];
+      var markers = [];
+        <% @affiliates.each do |a| %>
+          <% if a.has_geolocation_data? %>
+            var myLatlng<%= a.id %> = new google.maps.LatLng(<%= a.coords_lat %>,<%= a.coords_long %>);    
+            var marker<%= a.id %> = new google.maps.Marker({
+                position: myLatlng<%= a.id %>,
+                map: map,
+                title: "<%= a.title %>"
+            }); 
+            
+            markers.push(marker<%= a.id %>);
+            
+            google.maps.event.addListener(marker<%= a.id %>, 'click', function() {
+              $(".affiliate_info").hide();
+              $("#affiliate-info-<%= a.id %>").show();
+            });
+          <% end %>
+        <% end %>
+      var markerCluster = new MarkerClusterer(map, markers);      
+      <% end %>      
+  });
+</script>
+
+<div id="map-canvas">&nbsp;</div>
+<% unless @affiliates.blank? %>
+    <% @affiliates.each do |a| %>
+      <div class="affiliate_info" id="affiliate-info-<%= a.id %>">
+        <h2><%= a.title %></h2>
+        <address><%= a.address %>, <%= a.city %>, <%= a.postcode %></address>
+        <p>Telephone: <%= a.contact_number %></p>        
+        <p>Email: <%= a.contact_email %></p>        
+        <p>Website: <%= link_to a.website, a.website %></p>
+      </div>
+    <% end %>
+<% end %>
