@@ -2,6 +2,8 @@
   $(document).ready(function() {
     
     <% unless @affiliates.blank? %>
+    var infoWindows = [];
+    var markers = [];
       <% @affiliates.each do |a| %>
         <% if a.has_geolocation_data? %>
           var myLatlng<%= a.id %> = new google.maps.LatLng(<%= a.coords_lat %>,<%= a.coords_long %>);    
@@ -9,7 +11,25 @@
               position: myLatlng<%= a.id %>,
               map: map,
               title: "<%= a.title %>"
-          });          
+          }); 
+          
+          markers.push(marker<%= a.id %>);
+          
+          //var infowindow<%= a.id %> = new google.maps.InfoWindow({
+          //  content: "<h1><%= a.title %></h1>"
+          //});
+          
+          //infoWindows.push(infowindow<%= a.id %>);
+          
+          google.maps.event.addListener(marker<%= a.id %>, 'click', function() {
+            //for (var i = 0; i < infoWindows.length; i++) {
+            //  infoWindows[i].close();  
+            //}
+            
+            // infowindow<%= a.id %>.open(map,marker<%= a.id %>);
+            $(".affiliate_info").hide();
+            $("#affiliate-info-<%= a.id %>").show();
+          });
         <% end %>
       <% end %>
     <% end %>
@@ -18,13 +38,18 @@
 </script>
 
 <div id="map-canvas">&nbsp;</div>
-
 <% unless @affiliates.blank? %>
-  <ul>
     <% @affiliates.each do |a| %>
-      <li><%= link_to a.title, affiliate_path(a) %></li>
+      <div class="affiliate_info" id="affiliate-info-<%= a.id %>">
+        <h2><%= a.title %></h2>
+        <address><%= a.address %>, <%= a.city %>, <%= a.postcode %></address>
+        <p>Telephone: <%= a.contact_number %></p>        
+        <p>Email: <%= a.contact_email %></p>        
+        <p>Website: <%= link_to a.website, a.website %></p>
+      </div>
     <% end %>
-  </ul>  
 <% end %>
+  
+</div>
 
 
