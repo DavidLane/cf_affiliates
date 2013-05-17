@@ -2,15 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "bootstrap";
+
 #map-canvas {
-  width: 800px;
   height: 700px;
-  float: left;
 }
 
 .affiliate_info {
-  float: left;
-  width: 400px;
   display: none;
-  margin-left: 20px;
 }

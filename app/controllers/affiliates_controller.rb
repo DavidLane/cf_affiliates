@@ -1,6 +1,7 @@
 class AffiliatesController < ApplicationController
   def index
     @affiliates = Affiliate.uk.all
+    @regions = Region.all
   end
   
   def country

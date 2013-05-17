@@ -1,0 +1,12 @@
+<% unless @affiliates.blank? %>
+    <% @affiliates.each do |a| %>
+      <div class="affiliate_info" id="affiliate-info-<%= a.id %>">
+        <h2><%= a.title %></h2>
+        <address><%= a.address %>, <%= a.city %>, <%= a.postcode %></address>
+        <p>Telephone: <%= a.contact_number %></p>        
+        <p>Email: <%= a.contact_email %></p>        
+        <p>Website: <%= link_to a.website, a.website %></p>
+        <p>Is this incorrect? <a href="#" class="btn btn-mini">Click here to let us know!</a></p>
+      </div>
+    <% end %>
+<% end %>

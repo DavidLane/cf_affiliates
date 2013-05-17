@@ -11,6 +11,7 @@ gem 'activeadmin'
 gem 'country_select'
 gem 'mysql2'
 gem 'simple_form'
+gem "bootstrap-sass"
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -3,6 +3,7 @@
 <head>
   <% title = yield(:title) %>
   <title><%= title.blank? ? 'CF UK Affiliates' : title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCEsLFz9TSquUQENz6zCo-5qW9Z3AVT_2s&sensor=true" %>
   <%= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js" %>  
@@ -10,16 +11,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">CF UK Affilaites</a>
+        <div class="nav-collapse">
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <% if flash[:notice] %>
     <p class="notice"><%= flash[:notice] %></p>
   <% end %>
   <% if flash[:error] %>
     <p class="error"><%= flash[:error] %></p>
   <% end %>  
-<ul>
-  <li><%= link_to "Home", root_path %></li>
-</ul>
-<%= yield %>
+  <div class="container">  
+  <%= yield %>
+  </div>
 
 </body>
 </html>
