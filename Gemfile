@@ -5,13 +5,14 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-gem 'nokogiri'
-gem 'activeadmin'
-gem 'country_select'
+gem 'sqlite3' # Not entirely sure this is needed anymore!
+gem 'nokogiri' # For parsing
+gem 'activeadmin' # For admin-ing
+gem 'country_select' # Part of Active Admin
 gem 'mysql2'
-gem 'simple_form'
-gem "bootstrap-sass"
+gem 'simple_form' # Simple Form makes forms easier.
+gem "bootstrap-sass", '~> 2.3.1.0' # Install bootstrap
+gem "select2-rails" # Use this instead of typeahead
 
 # Gems used only for assets and not required
 # in production environments by default.
