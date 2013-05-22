@@ -10,6 +10,6 @@ class AffiliateUpdateRequest < ActiveRecord::Base
   validates :requester_email, :presence => true
   
   def send_alert
-    AffiliateUpdateRequestMailer.new_request_added(self).deliver
+    #AffiliateUpdateRequestMailer.new_request_added(self).deliver
   end
 end

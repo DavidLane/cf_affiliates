@@ -208,5 +208,19 @@ namespace :cf_affiliates do
       end
     end
   end
+  
+  desc "Compare data to alternative site"
+  task :compare_data => :environment do
+    @url = "http://www.colinmcnulty.com/blog/2010/03/13/list-and-map-of-crossfit-affiliates-in-the-uk/"
+    doc = Nokogiri::HTML(open(@url))
+    @affiliates = doc.css(".post_content h3 a")
+    
+    @affiliates.each do |a|
+      @affiliate_name = a.text
+      unless Affiliate.find_by_title(@affiliate_name)
+        puts @affiliate_name
+      end
+    end    
+  end
 
 end

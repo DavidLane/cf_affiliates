@@ -1,0 +1,13 @@
+<%= simple_form_for [@affiliate, @affiliate_update_request], :remote => true do |f| %>
+  <%= f.association :affiliate, as: :hidden %>
+  <%= f.input :requester_email, label: "Your email" %>
+  <%= f.input :new_title %>
+  <%= f.input :new_email %>
+  <%= f.input :new_telephone_number %>
+  <%= f.input :new_address %>
+  <%= f.input :new_postcode %>
+  <%= f.input :new_website %>
+  <%= f.input :new_city %>
+  <%= f.association :region, label: "New region" %>
+  <%= f.submit %>
+<% end %>

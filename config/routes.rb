@@ -1,7 +1,9 @@
 CfAffiliateScraper::Application.routes.draw do
 
-  resources :affiliates
-  resources :affiliate_update_requests
+  resources :affiliates do
+    resources :affiliate_update_requests
+  end
+
   resources :regions
   
   # API Routes

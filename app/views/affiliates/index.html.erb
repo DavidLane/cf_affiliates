@@ -1,32 +1,43 @@
-<script type="text/javascript">  
+<script type="text/javascript">
   $(document).ready(function() {
     
     <% unless @affiliates.blank? %>
-    var infoWindows = [];
-    var markers = [];
+      
       <% @affiliates.each do |a| %>
-        <% if a.has_geolocation_data? %>
-          var myLatlng<%= a.id %> = new google.maps.LatLng(<%= a.coords_lat %>,<%= a.coords_long %>);    
-          var marker<%= a.id %> = new google.maps.Marker({
-              position: myLatlng<%= a.id %>,
-              map: map,
-              title: "<%= a.title %>"
-          }); 
-          
-          markers.push(marker<%= a.id %>);
-          
-          google.maps.event.addListener(marker<%= a.id %>, 'click', function() {
-            $(".affiliate_info").hide();
-            $("#affiliate-info-<%= a.id %>").show();
-          });
+        <% if a.has_geolocation_data? %>          
+          markers.push(createMarker(map, <%= a.coords_lat %>, <%= a.coords_long %>, "<%= a.title %>", <%= a.id %>));
+          affiliates.push("<%= a.title %>");
         <% end %>
       <% end %>
-    //var markerCluster = new MarkerClusterer(map, markers);      
+      
+      $('#search-name').typeahead({
+        source: affiliates,
+        updater: function(item) {
+          // alert(item);
+          return item;
+        }
+      });
     <% end %>
+    
+    $("#search-name").select2({
+      placeholder: "Select an affiliate...",
+    });
+    
+    $("#search-name").on("change", function(e){
+      var affiliate_id = e.val;
+      marker = getMarkerByAffiliateId(affiliate_id);
+      selectMarker(marker);
+    });
        
-  });  
+  });
+  
 </script>
-
+<div class="row">
+  <div class="span12">
+    <h1>UK and Ireland Affiliate Data</h1>
+    <p class="lead">A complete, fully searchable list of UK and Ireland affiliates as seen on <a href="http://www.crossfit.com">CrossFit.com</a></p>
+  </div>
+</div>
 <div class="row">
   <div class="span8">
     <div id="map-canvas">&nbsp;</div>    
@@ -34,11 +45,48 @@
   <div class="span4">
     <div class="row">
       <div class="span4">
-        <div class="alert">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          Select an affiliate for more details
+        <div class="btn-group pull-right" id="controls">
+          <a href="#" class="btn btn-large" title="Search" id="search-btn"><span class="icon-search"></span></a>          
+          <a href="#" class="btn btn-large" title="List" id="list-btn"><span class="icon-list-alt"></span></a>          
+          <a href="#" class="btn btn-large" title="Add" id="add-btn"><span class="icon-plus"></span></a>           
         </div>
-      </div>
+        <div id="form">        
+          <form class="form-inline">
+            <legend>Search by name</legend>
+            <label>Name</label>
+            <select class="input-large" id="search-name">
+              <option>Select an affiliate...</option>
+              <% @affiliates.each do |a| %>
+                <option value="<%= a.id %>"><%= a.title %></option>
+              <% end %>              
+            </select>
+          </form>
+          <% unless @regions.blank? %>
+          <form class="form-inline">
+          <legend>Search by region</legend>
+          <label>Region</label>
+            <select id="search-region" class="input-medium">              
+                  <option value="">Select a region...</option>              
+                <% @regions.each do |r| %>
+                  <option value="<%= r.id %>"><%= r.title %></option>
+                <% end %>
+            </select>               
+          </form> 
+          <% end %>
+          <form class="form-inline">
+            <legend>Search by distance</legend>            
+            <label>Within</label>
+            <select id="postcode-distance" class="input-small">
+              <option value="5">5 miles</option>
+              <option value="10">10 miles</option>
+              <option value="20">20 miles</option>
+              <option value="50">50 miles</option>
+            </select>
+            <label>of</label>
+            <input type="text" autocomplete="off" id="search-postcode" placeholder="AB12 3CD" class="input-small" />
+          </form>  
+        </div>
+      </div>       
     </div>    
     <div class="row">
       <div class="span4">

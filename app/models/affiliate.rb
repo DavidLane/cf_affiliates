@@ -1,6 +1,7 @@
 class Affiliate < ActiveRecord::Base
   has_many :affiliate_certifications
   has_many :certifications, :through => :affiliate_certifications
+  has_many :affiliate_update_requests
   belongs_to :region
   
   attr_accessible :title, :website, :city, :state, :country, :original_scrape_data,
@@ -9,7 +10,7 @@ class Affiliate < ActiveRecord::Base
   
   # accepts_nested_attributes_for :certifications, :affiliate_certifications
   
-  scope :uk, where(:country => "United Kingdom").order(:title)
+  scope :uk, where("country = :united_kingdom OR country = :ireland OR country = :iom", {:united_kingdom => "United Kingdom", :ireland => "Ireland", :iom => "Isle Of Man"})
   
   def has_geolocation_data?
     if self.coords_lat.present? and self.coords_long.present?

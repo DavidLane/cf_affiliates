@@ -18,4 +18,8 @@ class AffiliatesController < ApplicationController
     @affiliate_update_request.region = @affiliate.region
     @affiliate_update_request.affiliate = @affiliate
   end
+  
+  def get_typeahead_data
+    @affiliates = Affiliate.all
+  end
 end
