@@ -1,0 +1,14 @@
+<div id="search-title" class="search">
+  <form class="form-inline">
+    <fieldset>
+      <legend>Search by name</legend>
+      <label>Name</label>
+      <select class="input-large" id="search-name">
+        <option>Select an affiliate...</option>
+        <% @affiliates.each do |a| %>
+          <option value="<%= a.id %>"><%= a.title %></option>
+        <% end %>              
+      </select>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+<% unless @regions.blank? %>
+  <div id="search-region" class="search">
+    <form class="form-inline">
+    <legend>Search by region</legend>
+    <label>Region</label>
+      <select id="search-region" class="input-medium">              
+            <option value="">Select a region...</option>              
+          <% @regions.each do |r| %>
+            <option value="<%= r.id %>"><%= r.title %></option>
+          <% end %>
+      </select>               
+    </form> 
+  </div>  
+<% end %>

@@ -45,46 +45,17 @@
   <div class="span4">
     <div class="row">
       <div class="span4">
-        <div class="btn-group pull-right" id="controls">
-          <a href="#" class="btn btn-large" title="Search" id="search-btn"><span class="icon-search"></span></a>          
-          <a href="#" class="btn btn-large" title="List" id="list-btn"><span class="icon-list-alt"></span></a>          
-          <a href="#" class="btn btn-large" title="Add" id="add-btn"><span class="icon-plus"></span></a>           
+        <div class="row">
+          <div class="btn-group pull-right" id="search-controls" data-toggle="buttons-radio">
+            <button type="button" class="btn btn-large" title="Search" id="search-btn"><span class="icon-search"></span></button>          
+            <button type="button" class="btn btn-large" title="List" id="list-btn"><span class="icon-list-alt"></span></button>          
+            <button type="button" class="btn btn-large" title="Add" id="add-btn"><span class="icon-plus"></span></button>           
+          </div>
         </div>
-        <div id="form">        
-          <form class="form-inline">
-            <legend>Search by name</legend>
-            <label>Name</label>
-            <select class="input-large" id="search-name">
-              <option>Select an affiliate...</option>
-              <% @affiliates.each do |a| %>
-                <option value="<%= a.id %>"><%= a.title %></option>
-              <% end %>              
-            </select>
-          </form>
-          <% unless @regions.blank? %>
-          <form class="form-inline">
-          <legend>Search by region</legend>
-          <label>Region</label>
-            <select id="search-region" class="input-medium">              
-                  <option value="">Select a region...</option>              
-                <% @regions.each do |r| %>
-                  <option value="<%= r.id %>"><%= r.title %></option>
-                <% end %>
-            </select>               
-          </form> 
-          <% end %>
-          <form class="form-inline">
-            <legend>Search by distance</legend>            
-            <label>Within</label>
-            <select id="postcode-distance" class="input-small">
-              <option value="5">5 miles</option>
-              <option value="10">10 miles</option>
-              <option value="20">20 miles</option>
-              <option value="50">50 miles</option>
-            </select>
-            <label>of</label>
-            <input type="text" autocomplete="off" id="search-postcode" placeholder="AB12 3CD" class="input-small" />
-          </form>  
+        <div class="row">        
+          <%= render "search_title" %>
+          <%= render "search_region" %>
+          <%= render "search_postcode" %>
         </div>
       </div>       
     </div>    
