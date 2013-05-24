@@ -16,6 +16,16 @@
   max-width: none;
 }
 
-.search {
-  display: none;
+#search {
+  margin-top: 10px;
+  
+  #search-mini-desc {
+    display: none;
+    margin-bottom: 0;
+  }
+  
+  #search-down {
+    display: none;
+  }
+  
 }

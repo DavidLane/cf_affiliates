@@ -1,12 +1,12 @@
 <% unless @affiliates.blank? %>
     <% @affiliates.each do |a| %>
       <div class="affiliate_info" id="affiliate-info-<%= a.id %>">
-        <h2><%= a.title %></h2>
+        <h3><%= a.title %></h3>
         <address><%= a.address %>, <%= a.city %>, <%= a.postcode %></address>
         <p>Telephone: <%= a.contact_number %></p>        
         <p>Email: <%= a.contact_email %></p>        
         <p>Website: <%= link_to a.website, a.website %></p>
-        <div class="alert alert-info">Is this incorrect?<a data-toggle="modal" data-target="#modal" href="<%= new_affiliate_affiliate_update_request_path(a) %>" class = "btn btn-mini">Let us know!</a></div>
+        <div class="well well-small alert-error">Is this incorrect?<a data-toggle="modal" data-target="#modal" href="<%= new_affiliate_affiliate_update_request_path(a) %>" class="btn btn-mini pull-right"><span class="icon-pencil"></span>&nbsp;Let us know!</a></div>
       </div>
     <% end %>
 <% end %>

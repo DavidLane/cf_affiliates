@@ -18,16 +18,6 @@
         }
       });
     <% end %>
-    
-    $("#search-name").select2({
-      placeholder: "Select an affiliate...",
-    });
-    
-    $("#search-name").on("change", function(e){
-      var affiliate_id = e.val;
-      marker = getMarkerByAffiliateId(affiliate_id);
-      selectMarker(marker);
-    });
        
   });
   
@@ -46,16 +36,12 @@
     <div class="row">
       <div class="span4">
         <div class="row">
-          <div class="btn-group pull-right" id="search-controls" data-toggle="buttons-radio">
-            <button type="button" class="btn btn-large" title="Search" id="search-btn"><span class="icon-search"></span></button>          
-            <button type="button" class="btn btn-large" title="List" id="list-btn"><span class="icon-list-alt"></span></button>          
-            <button type="button" class="btn btn-large" title="Add" id="add-btn"><span class="icon-plus"></span></button>           
-          </div>
+          <%= render "button_bar" %>
         </div>
-        <div class="row">        
-          <%= render "search_title" %>
-          <%= render "search_region" %>
-          <%= render "search_postcode" %>
+        <div class="row">
+          <div class="span4">
+            <%= render "sidebar_search" %>
+          </div>  
         </div>
       </div>       
     </div>    
@@ -66,6 +52,3 @@
     </div>    
   </div>
 </div>
-  
-
-

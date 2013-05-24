@@ -9,11 +9,7 @@ $(document).ready(function() {
   };  
   
   map = new google.maps.Map(document.getElementById("map-canvas"),
-      mapOptions);
-      
-  var infoWindow = new google.maps.InfoWindow({
-  });
-  
+      mapOptions);  
 });
 
 function createMarker(_map, coord_lat, coord_long, _title, id) {
@@ -33,7 +29,26 @@ function createMarker(_map, coord_lat, coord_long, _title, id) {
   return marker;
 }
 
+function clearMap() {
+  for(var i = 0; i < markers.length; i++) {
+    markers[i].setVisible(false);
+  }
+}
+
+function showAffiliateMarkerById(affiliate_id) {
+  showMarker(getMarkerByAffiliateId(affiliate_id));
+}
+
+function showMarker(marker) {
+  if (marker !== false) {
+    marker.setVisible(true);
+  }
+}
+
 function mapMarkerClick(marker) {
+  map.setCenter(marker.position);
+  map.setZoom(14);
+  hide_search_form();
   $(".affiliate_info").hide();
   $("#affiliate-info-" + marker.id).show();
 }
@@ -43,6 +58,8 @@ function getMarkerByAffiliateId(affiliate_id) {
     if (markers[i].id == affiliate_id) {
       return markers[i];
     }
+    
+    return false;
   }
 }
 
@@ -52,4 +69,9 @@ function selectMarker(marker) {
   setTimeout(function() {
     marker.setAnimation(null);
   }, 1500);
+}
+
+function resetMap(){
+  map.setCenter(new google.maps.LatLng(54.559323, -3.779297));
+  map.setZoom(6);
 }
