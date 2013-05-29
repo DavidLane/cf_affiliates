@@ -10,6 +10,13 @@ class ApiController < ApplicationController
     render :json => @regions
   end
   
+  def get_region 
+    @region = Region.find(params[:id])
+    @affiliates = @region.affiliates
+    
+    render :json => [region: @region, affiliates: @affiliates]
+  end
+  
   def get_cities
     @cities = Affiliate.uniq.pluck(:city)
     

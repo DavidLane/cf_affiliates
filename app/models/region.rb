@@ -1,6 +1,6 @@
 class Region < ActiveRecord::Base
   has_many :affiliates
-  attr_accessible :title, :coords_lat, :coords_long
+  attr_accessible :title, :coords_lat, :coords_long, :zoom
   
   def has_coords?
     if self.coords_lat.present? and self.coords_long.present?

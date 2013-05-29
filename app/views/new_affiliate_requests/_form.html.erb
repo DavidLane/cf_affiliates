@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="span6">
+    <%= simple_form_for @new_affiliate_request, :html => {:class => 'form-horizontal' }, :remote => true do |f| %>
+      <%= f.association :affiliate, as: :hidden %>
+      <%= f.input :requester_email, label: "Your email" %>
+      <%= f.input :title %>
+      <%= f.input :contact_email %>      
+      <%= f.input :contact_number %>      
+      <%= f.input :address %>
+      <%= f.input :postcode %>
+      <%= f.input :city %>      
+      <%= f.input :website %>                 
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>

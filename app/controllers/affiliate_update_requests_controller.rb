@@ -2,6 +2,8 @@ class AffiliateUpdateRequestsController < ApplicationController
   def new
     @affiliate = Affiliate.find(params[:affiliate_id]);
     @affiliate_update_request = @affiliate.affiliate_update_requests.build
+    
+    @affiliate_update_request.populate_from_affiliate(@affiliate)
 
     render :layout => false
   end
@@ -14,7 +16,7 @@ class AffiliateUpdateRequestsController < ApplicationController
       unless @affiliate_update_request.save
         format.js { render "index" }
       else
-        flash[:notice] = "Your update has been received. Thanks!"
+        flash[:affiliate_box_notice] = "Your update has been received. Thanks!"
         format.js { render 'completed' }
       end
     end

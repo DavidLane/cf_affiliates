@@ -1,13 +1,16 @@
-<%= simple_form_for [@affiliate, @affiliate_update_request], :remote => true do |f| %>
-  <%= f.association :affiliate, as: :hidden %>
-  <%= f.input :requester_email, label: "Your email" %>
-  <%= f.input :new_title %>
-  <%= f.input :new_email %>
-  <%= f.input :new_telephone_number %>
-  <%= f.input :new_address %>
-  <%= f.input :new_postcode %>
-  <%= f.input :new_website %>
-  <%= f.input :new_city %>
-  <%= f.association :region, label: "New region" %>
-  <%= f.submit %>
-<% end %>
+<div class="alert alert-info" data-affiliate-id="<%= @affiliate.id %>">
+  <button type="button" class="close">&times;</button>        
+  <%= simple_form_for [@affiliate, @affiliate_update_request], :html => {class: "form-inline"}, :remote => true do |f| %>
+    <%= f.association :affiliate, as: :hidden %>
+    <%= f.input :requester_email, label: "Your email" %>
+    <%= f.input :new_title, label: "Title" %>
+    <%= f.input :new_email, label: "Contact Email" %>      
+    <%= f.input :new_telephone_number, label: "Contact Number" %>      
+    <%= f.input :new_address, label: "Address" %>
+    <%= f.input :new_postcode, label: "Postcode" %>
+    <%= f.input :new_website, label: "Website" %>     
+    <%= f.input :new_city, label: "City" %>      
+    <%= f.association :region, label: "Region" %>      
+    <%= f.submit "Send update", :class => 'btn' %>
+  <% end %>
+</div>

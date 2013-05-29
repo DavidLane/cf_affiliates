@@ -3,15 +3,19 @@
 <head>
   <% title = yield(:title) %>
   <title><%= title.blank? ? 'UK and Ireland Affiliate Data' : title %></title>  
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCEsLFz9TSquUQENz6zCo-5qW9Z3AVT_2s&sensor=true" %>
-  <%= javascript_include_tag "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js" %>  
-  <%= javascript_include_tag "application" %>    
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCEsLFz9TSquUQENz6zCo-5qW9Z3AVT_2s&sensor=true&v=3&libraries=geometry" %>
+  <%= javascript_include_tag "application" %>  
+  <%= stylesheet_link_tag    "application", :media => "all" %>  
   <%= csrf_meta_tags %>
 </head>
 <body>  
   <% if flash[:notice] %>
-    <p class="notice"><%= flash[:notice] %></p>
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div id="notice">
+        <%= flash[:notice] %>
+      </div>
+    </div>
   <% end %>
   <% if flash[:error] %>
     <p class="error"><%= flash[:error] %></p>

@@ -2,21 +2,11 @@
   $(document).ready(function() {
     
     <% unless @affiliates.blank? %>
-      
       <% @affiliates.each do |a| %>
         <% if a.has_geolocation_data? %>          
-          markers.push(createMarker(map, <%= a.coords_lat %>, <%= a.coords_long %>, "<%= a.title %>", <%= a.id %>));
-          affiliates.push("<%= a.title %>");
+          affiliates_map.mapMarkers.push(affiliates_map.createMarker(<%= a.coords_lat %>, <%= a.coords_long %>, "<%= a.title %>", <%= a.id %>));
         <% end %>
       <% end %>
-      
-      $('#search-name').typeahead({
-        source: affiliates,
-        updater: function(item) {
-          // alert(item);
-          return item;
-        }
-      });
     <% end %>
        
   });
@@ -43,11 +33,21 @@
             <%= render "sidebar_search" %>
           </div>  
         </div>
+        <div class="row">
+          <div class="span4">
+            <%= render "form" %>
+          </div>
+        </div>
       </div>       
     </div>    
     <div class="row">
-      <div class="span4">
-        <%= render "affiliate_box" %>
+      <div class="span4" id="affiliate_notice">
+      </div>        
+      <div class="span4" id="affiliate-box">        
+          <%= render "affiliate_box" %>
+      </div>
+      
+      <div class="span4" id="affiliate-edit-box">
       </div>
     </div>    
   </div>

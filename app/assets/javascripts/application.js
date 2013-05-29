@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require select2
 //= require bootstrap
+//= require underscore.min
 //= require_tree .

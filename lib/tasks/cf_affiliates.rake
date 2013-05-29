@@ -222,5 +222,25 @@ namespace :cf_affiliates do
       end
     end    
   end
+  
+  desc "Get a list of affiliates that use Wordpress"
+  task :get_wordpress_users => :environment do
+    @affiliates = Affiliate.uk
+    
+    unless @affiliates.blank?
+      @affiliates.each do |a|
+        begin
+          @url = a.website + "/feed"
+          puts @url
+          @response = open(@url, :redirect => false)
+          unless @response.blank?
+            puts @response.status.inspect
+          end
+          rescue OpenURI::HTTPError => the_error
+          puts the_error.inspect  
+        end  
+      end
+    end
+  end
 
 end

@@ -1,0 +1,10 @@
+<script type="text/javascript">
+window.setTimeout(function() {
+  $("#affiliate_notice .alert").slideUp();
+}, 2000);
+</script>
+
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:affiliate_box_notice] %>
+</div>

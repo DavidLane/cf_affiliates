@@ -3,12 +3,15 @@ CfAffiliateScraper::Application.routes.draw do
   resources :affiliates do
     resources :affiliate_update_requests
   end
+  
+  resources :new_affiliate_reuquests
 
   resources :regions
   
   # API Routes
   match "api" => "api#index", :as => :api_index
   match "api/get_regions" => "api#get_regions", :as => :api_get_regions
+  match "api/get_region/:id" => "api#get_region", :as => :api_get_region  
   match "api/get_cities" => "api#get_cities", :as => :api_get_cities
   match "api/get_countries" => "api#get_countries", :as => :api_get_countries
   match "api/get_affiliates_by_region/:id" => "api#get_affiliates_by_region", :as => :api_get_affiliate_by_region 
