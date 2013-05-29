@@ -245,7 +245,7 @@ namespace :cf_affiliates do
   
   desc "Set all unprocessed data"
   task :assign_unprocessed => :environment do
-    @affiliates = Affiliates.uk
+    @affiliates = Affiliate.uk
     
     unless @affiliates.blank?
       @affiliates.each do |a|
