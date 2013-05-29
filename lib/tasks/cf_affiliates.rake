@@ -145,7 +145,7 @@ namespace :cf_affiliates do
          end
         end
       end
-      #ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
+      ScraperMailer.new_affiliates_added(@new_affilliate_array).deliver
       puts "New affiliates:" + @new_affiliate_array.count.to_s      
     else
       ScrapeLogger.info(DateTime.now.strftime + ": No update required")   

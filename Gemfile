@@ -13,6 +13,7 @@ gem 'mysql2'
 gem 'simple_form' # Simple Form makes forms easier.
 gem "bootstrap-sass", '~> 2.3.1.0' # Install bootstrap
 gem "select2-rails" # Use this instead of typeahead
+gem 'whenever', :require => false # Scheduler
 
 # Gems used only for assets and not required
 # in production environments by default.

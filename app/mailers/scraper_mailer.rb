@@ -4,6 +4,6 @@ class ScraperMailer < ActionMailer::Base
   
   def new_affiliates_added(new_affiliates)
     @affiliates = new_affiliates
-    mail(:subject => "New Affiliate Added")
+    mail(:subject => "New Affiliates Added")
   end
 end
