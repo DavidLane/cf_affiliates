@@ -230,7 +230,7 @@ namespace :cf_affiliates do
     unless @affiliates.blank?
       @affiliates.each do |a|
         begin
-          @url = a.website + "/feed"
+          @url = a.website + "/wp-login.php"
           puts @url
           @response = open(@url, :redirect => false)
           unless @response.blank?
@@ -239,6 +239,20 @@ namespace :cf_affiliates do
           rescue OpenURI::HTTPError => the_error
           puts the_error.inspect  
         end  
+      end
+    end
+  end
+  
+  desc "Set all unprocessed data"
+  task :assign_unprocessed => :environment do
+    @affiliates = Affiliates.uk
+    
+    unless @affiliates.blank?
+      @affiliates.each do |a|
+        unless a.coords_lat.present?
+          a.unprocessed = true
+          a.save
+        end
       end
     end
   end

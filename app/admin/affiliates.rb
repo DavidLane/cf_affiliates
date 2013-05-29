@@ -6,6 +6,7 @@ ActiveAdmin.register Affiliate do
   filter :city
   filter :state
   filter :country
+  filter :unprocessed
   
   # List
   index do
@@ -46,6 +47,7 @@ ActiveAdmin.register Affiliate do
     
     f.inputs "Scrape Data" do
       f.input :original_scrape_data
+      f.input :unprocessed      
     end
     
     f.actions    
