@@ -8,8 +8,6 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>  
   <%= csrf_meta_tags %>
   <meta property="og:image" content="http://www.cfuk-affiliates.com<%= image_path("screenshot.png") %>" />
-</head>
-<body>  
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -19,7 +17,9 @@
     ga('create', 'UA-19060180-3', 'cfuk-affiliates.com');
     ga('send', 'pageview');
   
-  </script>
+  </script>  
+</head>
+<body>  
     
   <% if flash[:notice] %>
     <div class="alert alert-success">
