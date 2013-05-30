@@ -7,6 +7,7 @@
   <%= javascript_include_tag "application" %>  
   <%= stylesheet_link_tag    "application", :media => "all" %>  
   <%= csrf_meta_tags %>
+  <meta property="og:image" content="<%= image_path("screenshot.png") %>" />
 </head>
 <body>  
   <% if flash[:notice] %>
