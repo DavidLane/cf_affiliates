@@ -40,10 +40,8 @@ $(document).ready(function(){
   
   $("#refresh-btn").on("click", reset);
   
-  $("#search-postcode-postcode").keyup(function(e){
-    if(e.which == 13) {
-      $("#search-postcode form").trigger("submit");
-    }
+  $("#search-postcode .btn").click(function(e){
+    $("#search-postcode form").trigger("submit");
   });
   
   $("#search-postcode form").submit(function(e){
