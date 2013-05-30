@@ -7,6 +7,7 @@ var UKAffiliatesMap = function() {
   
   this.map = false;
   this.mapMarkers = [];
+  this.infoWindows = [];
   this.searchLocationMarkers = [];
   this.searchRadiusMarkers = [];
   
@@ -23,14 +24,21 @@ var UKAffiliatesMap = function() {
     var latLng = new google.maps.LatLng(coord_lat, coord_long);
     var marker = new google.maps.Marker({
       position: latLng,
-      map: this.map,
+      map: this.getMap(),
       title: _title
     });
     
     marker.id = id;
     
+    var infoWindow = new google.maps.InfoWindow({
+      content: "<div class=\"info-window-content\"><h5 class=\"info-window-title\">" + _title + "</h5></div>"
+    });
+    
+    this.infoWindows.push(infoWindow);
+    
     google.maps.event.addListener(marker, 'click', function(e){
       affiliates_map.mapMarkerClick(marker);
+      affiliates_map.openInfoWindow(infoWindow, marker);
     });
     
     return marker;
@@ -61,11 +69,12 @@ var UKAffiliatesMap = function() {
     var coords = new google.maps.LatLng(coords_lat, coords_long);
     this.map.setCenter(coords);
     
-    this.map.setZoom(zoom);    
+    this.map.setZoom(zoom);
   }
   
   this.resetMap = function (){
     affiliates_map.setCoordsAndZoom(54.559323, -3.779297, 6);
+    this.closeAllInfoWindows();    
   }
   
   this.showRegion = function(coords_lat, coords_long, zoom) {
@@ -90,6 +99,17 @@ var UKAffiliatesMap = function() {
     $(".affiliate_info").hide();
     $("#affiliate-info-" + marker.id).show();    
   }
+ 
+  this.openInfoWindow = function(info_window, marker) {
+    affiliates_map.closeAllInfoWindows();
+    info_window.open(affiliates_map.getMap(), marker);
+  }
+  
+  this.closeAllInfoWindows = function() {
+    for (var i=0; i < affiliates_map.infoWindows.length; i++) {
+      affiliates_map.infoWindows[i].close(); 
+    }
+  }
   
   this.getMarkerByAffiliateId = function(affiliate_id) {
     for(var i = 0; i < this.mapMarkers.length; i++) {
@@ -103,7 +123,8 @@ var UKAffiliatesMap = function() {
   
   this.selectMarker = function(marker) {
     if (marker) {
-      this.mapMarkerClick(marker);  
+      new google.maps.event.trigger( marker, 'click');
+      //this.mapMarkerClick(marker);  
       marker.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function() {
         marker.setAnimation(null);
@@ -111,9 +132,8 @@ var UKAffiliatesMap = function() {
     }
   }
   
-  this.isWithinDistanceFromLocation = function(distance, current_location, destination) {
-    var distance_between = google.maps.geometry.spherical.computeDistanceBetween(current_location, destination);
-    return (distance_between/1000) < distance;  
+  this.getDistanceFromLocation = function(current_location, destination) {
+    return google.maps.geometry.spherical.computeDistanceBetween(current_location, destination);
   }  
    
 }

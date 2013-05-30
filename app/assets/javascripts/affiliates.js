@@ -11,6 +11,7 @@ $(document).ready(function(){
   $("#search-name").on("change", function(e){
     var affiliate_id = e.val;
     marker = affiliates_map.getMarkerByAffiliateId(affiliate_id);
+    affiliates_map.removeSearchMarkers();
     affiliates_map.selectMarker(marker);
   });  
   
@@ -39,14 +40,20 @@ $(document).ready(function(){
   
   $("#refresh-btn").on("click", reset);
   
-  $("#postcode-distance").change(function(e) {
-    run_postcode_search($(this).val(), $("#search-postcode-postcode").val());
+  $("#search-postcode-postcode").keyup(function(e){
+    if(e.which == 13) {
+      $("#search-postcode form").trigger("submit");
+    }
   });
   
-  $("#search-postcode-postcode").blur(function(e){
-    if ($(this).val() != "") {
-      run_postcode_search($("#postcode-distance").val(), $(this).val());
+  $("#search-postcode form").submit(function(e){
+    e.stopPropagation();
+        
+    if ($("#search-postcode-postcode").val() != "") {
+      run_postcode_search($("#search-postcode-postcode").val());
     }   
+    
+    return false;
   });
   
   $('.edit-affiliate').on("click", function(e){
@@ -71,7 +78,7 @@ $(document).ready(function(){
   
 });
 
-function run_postcode_search(distance, location) {
+function run_postcode_search(location) {
   affiliates_map.removeSearchMarkers();    
   var zoom = 10;
   var distance = parseInt(distance);
@@ -116,28 +123,25 @@ function run_postcode_search(distance, location) {
     
     affiliates_map.searchLocationMarkers.push(search_location);
     
-    var circle = new google.maps.Circle({
-      map: affiliates_map.getMap(),
-      radius: distance * 1000,    // 10 miles in metres
-      fillColor: '#0088cc',
-      strokeWeight: 1,
-      strokeColor: "#008BD1"
-    });
+    affiliates_map.setCoordsAndZoom(lat, lng, zoom);     
     
-    circle.bindTo('center', search_location, 'position');
+    var affiliates_with_distances = []; 
     
-    affiliates_map.searchRadiusMarkers.push(circle);
-    
-    affiliates_map.setCoordsAndZoom(lat, lng, zoom);      
-    
-    /*for(var i=0; i < affiliates_map.mapMarkers.length; i++) {
+    for(var i=0; i < affiliates_map.mapMarkers.length; i++) {
       var affiliate = affiliates_map.mapMarkers[i];
       var affiliate_pos = affiliate.getPosition();
-      if(affiliates_map.isWithinDistanceFromLocation(distance, affiliate_pos, search_coords_1)) {
-        affiliates_map.showMarker(affiliate);
-      }
-      
-    } */
+      var distance = affiliates_map.getDistanceFromLocation(affiliate_pos, search_coords_1);
+      var affiliate_distance = {affiliate: affiliate.id, distance: distance};
+      affiliates_with_distances.push(affiliate_distance);
+    }
+    
+    affiliates_with_distances.sort(function(obj1, obj2) {
+      return obj1.distance - obj2.distance;
+    });
+    
+    var closest_affiliate = _.first(affiliates_with_distances);
+    
+   affiliates_map.selectMarker(affiliates_map.getMarkerByAffiliateId(closest_affiliate.affiliate));
   });
 }
 
